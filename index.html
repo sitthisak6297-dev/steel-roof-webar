@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Steel Roof WebAR</title>
+
+  <script type="module"
+    src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.1.0/model-viewer.min.js">
+  </script>
+
+  <style>
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
+
+    model-viewer {
+      width: 100%;
+      height: 100%;
+      background: #eeeeee;
+    }
+
+    #ar-button {
+      background: white;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 20px;
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+  </style>
+</head>
+
+<body>
+
+  <model-viewer
+    src="SteelRoofV10_WebAR2.glb"
+    alt="Steel Roof 3D Model"
+    camera-controls
+    auto-rotate
+    shadow-intensity="1"
+    ar
+    ar-modes="webxr scene-viewer quick-look">
+
+    <button slot="ar-button" id="ar-button">
+      📱 ดูโมเดลใน AR
+    </button>
+
+  </model-viewer>
+
+</body>
+</html>
