@@ -1,61 +1,32 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Steel Roof WebAR</title>
-
-  <script type="module"
-    src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.1.0/model-viewer.min.js">
-  </script>
-
-  <style>
-    html, body {
-      margin: 0;
-      width: 100%;
-      height: 100%;
-      font-family: Arial, sans-serif;
-    }
-
-    model-viewer {
-      width: 100%;
-      height: 100%;
-      background: #eeeeee;
-    }
-
-    #ar-button {
-      background: white;
-      border: none;
-      border-radius: 8px;
-      padding: 12px 20px;
-      position: absolute;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 16px;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
-    }
-  </style>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#155c46"><title>Steel Roof — สำรวจโมเดล 3D</title>
+  <meta name="description" content="สำรวจโครงหลังคาเหล็ก เปิดประตู ถอดแผ่นหลังคา และเตรียมดูบนพื้นที่จริงด้วย AR">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23155c46'/%3E%3Cpath d='M5 13L25 8L28 12L6 17ZM8 18V26M25 15V26' fill='white' stroke='white' stroke-width='2'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">{"imports":{"three":"./vendor/three/build/three.module.js","three/addons/":"./vendor/three/examples/jsm/"}}</script>
+  <script type="module" src="app.js"></script>
 </head>
-
 <body>
-
-  <model-viewer
-   src="SteelRoofV10_DoubleGate_FIXED.glb"
-    alt="Steel Roof 3D Model"
-    camera-controls
-    auto-rotate
-    shadow-intensity="1"
-    ar
-    ar-modes="webxr scene-viewer quick-look">
-
-    <button slot="ar-button" id="ar-button">
-      📱 ดูโมเดลใน AR
-    </button>
-
-  </model-viewer>
-
-</body>
-</html>
+ <main class="app">
+  <header><div><p class="eyebrow">สำรวจโครงสร้าง</p><h1>Steel Roof</h1></div><span class="view-label" id="view-label">มุมเริ่มต้น</span></header>
+  <section id="viewport" aria-label="โมเดลหลังคาเหล็ก 3 มิติ">
+   <div id="canvas-host"></div>
+   <div id="loading" class="loading" role="status"><span class="spinner"></span><strong id="load-title">กำลังโหลดโมเดล</strong><span id="load-detail">เตรียมโครงสร้างและวัสดุ</span><progress id="progress" max="100" value="0"></progress><button id="retry" hidden>ลองใหม่</button></div>
+   <div class="model-note" aria-hidden="true"><span>400 × 360 ซม.</span><span>โมเดลขนาดจริง</span></div>
+  </section>
+  <footer>
+   <p class="gesture-hint">ลากหนึ่งนิ้วเพื่อหมุน · สองนิ้วเพื่อซูมและเลื่อน</p>
+   <nav class="controls" aria-label="ควบคุมโมเดล">
+    <button id="gates" disabled aria-pressed="false"><span aria-hidden="true">🚪</span><span id="gate-label">เปิดประตู</span></button>
+    <button id="roof" disabled aria-pressed="false"><span aria-hidden="true">🏠</span><span id="roof-label">ถอดหลังคา</span></button>
+    <button id="reset" disabled><span aria-hidden="true">🔄</span><span>รีเซ็ตมุมมอง</span></button>
+    <button id="ar" disabled><span aria-hidden="true">📱</span><span>ดูโมเดลใน AR</span></button>
+   </nav>
+   <p id="status" role="status" aria-live="polite">กำลังเตรียมโมเดล</p>
+  </footer>
+ </main>
+ <dialog id="ar-dialog" aria-labelledby="ar-title"><h2 id="ar-title">ดูโมเดลบนพื้นที่จริง</h2><p id="ar-message"></p><p>โหมด AR ใช้โมเดลประตูปิดและใส่หลังคา ส่วนปุ่มควบคุมโครงสร้างใช้งานในหน้า 3D นี้</p><div class="dialog-actions"><button id="ar-close">กลับไปดูโมเดล</button><a class="button primary" href="ar.html">เปิดหน้า AR</a></div></dialog>
+</body></html>
